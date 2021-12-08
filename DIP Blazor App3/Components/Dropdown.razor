@@ -1,0 +1,24 @@
+﻿@using DIP_Blazor_App.Shared
+@inject ImageProcessor_ ImgProcessor
+
+<select class="dropdown-header" aria-haspopup="true" aria-expanded="false" @onchange="@ChangeCallBack">
+    <option class="dropdown-item"> @StartingText</option>
+    @foreach (string item in this.Options)
+    {
+        <option class="dropdown-item"> @item</option>
+    }
+</select>
+
+
+@code {
+
+    [Parameter]
+    public string StartingText { get; set; }
+
+    [Parameter]
+    public List<string> Options { get; set; }
+
+    [Parameter]
+    public EventCallback<ChangeEventArgs> ChangeCallBack { get; set; }
+
+}

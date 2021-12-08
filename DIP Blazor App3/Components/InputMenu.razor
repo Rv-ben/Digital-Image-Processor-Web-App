@@ -1,0 +1,24 @@
+﻿@using DIP_Blazor_App.Models
+@using DIP_Blazor_App.Shared
+
+
+@if (AlgModel != null)
+{
+            <DynamicComponent 
+                        Type="@AlgModel.GetComponentType()"
+                        Parameters="@AlgModel.GetParams()"
+                        />
+}
+
+@code {
+    [Parameter]
+    public AlgorithmModel AlgModel { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnValidSubmitCallback { get; set; }
+
+    public void callback()
+    {
+        OnValidSubmitCallback.InvokeAsync();
+    }
+}

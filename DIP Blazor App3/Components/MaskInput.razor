@@ -1,0 +1,27 @@
+﻿@using DIP_Blazor_App.Models
+@using System.ComponentModel.DataAnnotations;
+@inject ImageProcessor_ imgProcessor
+
+<EditForm Model="input" OnValidSubmit="()=> imgProcessor.Preform()">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div>
+        <label>Mask Width</label>
+        <InputNumber @bind-Value="input.Width" placeholder="Mask Width" />
+        <ValidationMessage For="@(()=>input.Width)"></ValidationMessage>
+    </div>
+    <div>
+        <label>Mask Height</label>
+        <InputNumber @bind-Value="input.Height" placeholder="Mask Height" />
+        <ValidationMessage For="@(()=>input.Height)"></ValidationMessage>
+    </div>
+    <button class="btn btn-success btn-lg" type="submit">Preform Algorithm</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public ScaleInputModel input { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnValidSubmitCallback { get; set; }
+}

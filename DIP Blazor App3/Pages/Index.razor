@@ -1,0 +1,36 @@
+﻿@page "/"
+@using DIP_Blazor_App.Components;
+@using DIP_Blazor_App.Shared
+
+@inject ImageProcessor_ imgProcessor
+
+<div>
+   <MainMenu />
+</div>
+
+@if(imgProcessor.OriginalImage != null)
+{
+    <div class="main">
+        <div>
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col m-2">
+                        <ImageDisplay image="@imgProcessor.OriginalImage"></ImageDisplay>
+                    </div>   
+        
+                    <div class="col m-21">
+                        <ImageDisplay image="@imgProcessor.TransformedImage"></ImageDisplay>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+}
+
+
+@code{
+    protected override void OnInitialized()
+    {
+        imgProcessor.ImageChange += StateHasChanged;
+    }
+}

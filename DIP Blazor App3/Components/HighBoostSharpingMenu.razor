@@ -1,0 +1,22 @@
+﻿@using DIP_Blazor_App.Models
+@using System.ComponentModel.DataAnnotations;
+@inject ImageProcessor_ imgProcessor
+
+<EditForm Model="input" OnValidSubmit="()=> imgProcessor.Preform()">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div>
+        <label>A</label>
+        <InputNumber @bind-Value="input.A" placeholder="Mask Height" />
+        <ValidationMessage For="@(()=>input.A)"></ValidationMessage>
+    </div>
+    <button class="btn btn-success btn-lg" type="submit">Preform Algorithm</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public HighBoostSharpeningInputModel input { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnValidSubmitCallback { get; set; }
+}

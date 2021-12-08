@@ -1,0 +1,46 @@
+﻿@using DIP_Blazor_App.Models
+@using DIP_Blazor_App.Shared
+
+<div>
+     <img src="@url" class="rounded mx-auto d-block">
+     <div>
+        @if(image != null)
+        {
+            @if(image.compressionInfo.CompressionTime != null)
+            {
+              <div><b>Compresstion Time: @image.compressionInfo.CompressionTime.ToString()</b> </div>
+            }
+            @if(image.compressionInfo.DecompressionTime != null)
+            {
+              <div><b>Decompresstion Time: @image.compressionInfo.DecompressionTime.ToString()</b> </div>
+            }
+            @if(image.compressionInfo.mse != null)
+            {
+              <div><b>Mean Square Error: @image.compressionInfo.mse</b> </div>
+            }
+            @if(image.compressionInfo.CompressionRatio!= null)
+            {
+              <div><b>Compresstion Ratio: @image.compressionInfo.CompressionRatio</b>  bits</div>
+            }
+        }
+     </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public ImageInfo image{ get; set; }
+
+    public string url { get; set; }
+
+    protected override Task OnParametersSetAsync()
+    {
+        url = image.Url;
+        return base.OnParametersSetAsync();
+    }
+
+    protected override void OnInitialized()
+    {
+        
+    }
+}

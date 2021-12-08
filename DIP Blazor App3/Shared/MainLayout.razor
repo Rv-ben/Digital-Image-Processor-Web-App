@@ -1,0 +1,17 @@
+﻿@inherits LayoutComponentBase
+@using DIP_Blazor_App.Components;
+
+@inject ImageProcessor_ imgProcessor
+
+<div>
+    @Body
+    
+</div>
+
+@code
+{
+    protected override void OnInitialized()
+    {
+        imgProcessor.ImageChange += StateHasChanged;
+    }
+}

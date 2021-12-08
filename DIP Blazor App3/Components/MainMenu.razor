@@ -1,0 +1,73 @@
+﻿@using DIP_Blazor_App.Shared;
+@using System.Drawing;
+@using DIP_Blazor_App.Models;
+@inject ImageProcessor_ imgProcessor
+
+<div class="pos-f-t">
+    <div class=@NavMenuCssClass>
+        <div class="bg p-4">
+            <h4 class="text-black">Main Menu</h4>
+            <span class="text-muted">Upload an Image to get started.</span>
+            <div class="container">
+                <div class="row justify-content-start">
+                    <div class="col ">
+                            <div class="btn-group mr-3" role="group" aria-label="Algorithm Select">
+                                <InputFile 
+                                    OnChange="@FileUpload"></InputFile>
+                                <button class="@ResetCSS" @onclick="()=>imgProcessor.ResetTransformImage()">Reset Image</button>
+                            </div>
+                    </div>
+                    <div class="col">
+                        <Dropdown 
+                                StartingText="Select Algorithm" 
+                                Options="@imgProcessor.AlgorithmModels.Keys.ToList()" 
+                                ChangeCallBack="@AlgorithmChange"/>
+                    </div>
+                    <div class="col">
+                        <div class="btn-toolbar mt-3 mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-3" role="group">
+                                <InputMenu AlgModel="@AlgModel"></InputMenu>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+        <button class="navbar-toggler" @onclick=ToggleNavMenu type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+</div>
+
+@code {
+
+    private bool collapseNavMenu = false;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private string ResetCSS = "btn btn-danger btn-sm invisible";
+
+    public AlgorithmModel AlgModel { get; set; }
+
+    protected override void OnInitialized()
+    {
+        AlgModel = null;
+    }
+
+    private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
+
+    public void AlgorithmChange(ChangeEventArgs e)
+    {
+        imgProcessor.ChangeSelectedModel((string)e.Value);
+        AlgModel = imgProcessor.CurrentAlgorithmModel;
+    }
+
+    public void FileUpload(InputFileChangeEventArgs e)
+    {
+        ResetCSS = "btn btn-danger btn-sm visible";
+
+        imgProcessor.LoadImage(e);
+    }
+}

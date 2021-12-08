@@ -1,0 +1,20 @@
+﻿@using DIP_Blazor_App.Models
+@inject ImageProcessor_ imgProcessor
+
+<EditForm Model="input" OnValidSubmit="() => imgProcessor.Preform()">
+    <DataAnnotationsValidator />
+    <div>
+        <label>Greyscale Range Value (bit) </label>
+        <InputNumber @bind-Value="input.NewGreyScaleBitRange"/>
+    </div>
+    <button class="btn btn-success btn-lg" type="submit">Preform Algorithm</button>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public GreyScaleInputModel input { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnValidSubmitCallback { get; set; }
+}
